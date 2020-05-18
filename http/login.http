@@ -1,5 +1,10 @@
 
 ###
+DELETE http://localhost:8080/api/delete/3
+
+###
+
+###
 POST http://localhost:8080/api/login
 Content-Type: application/json
 
