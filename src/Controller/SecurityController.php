@@ -17,7 +17,7 @@ use App\Service\Jsoner;
 class SecurityController extends AbstractController
 {
     /**
-     * @Route("/api/login", name="login", methods={"POST"})
+     * @Route("/api/user/login", name="login", methods={"POST"})
      * @param Request $request
      * @return JsonResponse
      */
@@ -31,6 +31,7 @@ class SecurityController extends AbstractController
 //        ];
         return new JsonResponse($jsoner->getJson($user), 200, [],true);
     }
+
     /**
      * @Route("/api/user", name="get_users", methods={"GET"})
      * @param Request $request
@@ -43,7 +44,7 @@ class SecurityController extends AbstractController
     }
 
     /**
-     * @Route("/api/delete/{id}", name="delete_users", methods={"DELETE"})
+     * @Route("/api/user/{id}", name="delete_users", methods={"DELETE"})
      * @param $id
      * @return Response
      */
