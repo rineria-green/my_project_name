@@ -115,6 +115,16 @@ class User implements UserInterface
         return $this;
     }
 
+    public function generationPassword(){
+        $chars="1234567890abcdxyzABCDXYZ";
+        $max=5;
+        $size=StrLen($chars)-1;
+        $password=null;
+        while($max--)
+            $password.=$chars[rand(0,$size)];
+        return $password;
+    }
+
     /**
      * @see UserInterface
      */

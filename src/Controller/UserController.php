@@ -26,9 +26,32 @@ class UserController extends AbstractController
         $content = json_decode($content, true);
         $user = new User();
         $user->setEmail($content["email"]);
-        if ($content["phone"] != null)
+        if (isset($content["phone"]))
             $user->setPhone($content["phone"]);
-        $user->setPassword($this->generationPassword());
+        $user->setRoles(["ROLE_USER"]);
+        $user->setPassword($user->generationPassword());
+        $this->getDoctrine()->getManager()->persist($user);
+        $this->getDoctrine()->getManager()->flush();
+        return new JsonResponse($jsoner->getJson($user), 201, [], true);
+    }
+
+    /**
+     * @Route("/api/user/{id}/password", name="change_password", methods={"PUT"})
+     * @param Request $request
+     * @param $id
+     * @return Response
+     */
+    public function changePassword (Request $request, $id, Jsoner $jsoner)
+    {
+        $content = $request->getContent();
+        $content = json_decode($content, true);
+        $user= $this->getDoctrine()->getManager()->getRepository(User::class)->find($id);
+        if ($content["password"] === $user->getPassword()){
+            $user->setPassword($content["new_password"]);
+        }
+        else{
+            return (new Response("", 403));
+        }
         $this->getDoctrine()->getManager()->persist($user);
         $this->getDoctrine()->getManager()->flush();
         return new JsonResponse($jsoner->getJson($user), 201, [], true);
@@ -55,7 +78,7 @@ class UserController extends AbstractController
     {
 //        $this->denyAccessUnlessGranted('ROLE_USER');
         $user = $this->getDoctrine()->getManager()->getRepository(User::class)->find($id);
-        if ((int)$id === 1) {
+        if (((int)$id === 1)||((int)$id === 2)) {
             return (new Response("", 400));
         }
         else {
@@ -63,15 +86,5 @@ class UserController extends AbstractController
             $this->getDoctrine()->getManager()->flush();
             return (new Response("", 204));
         }
-    }
-
-    private function generationPassword(){
-        $chars="1234567890abcdxyzABCDXYZ";
-        $max=5;
-        $size=StrLen($chars)-1;
-        $password=null;
-        while($max--)
-            $password.=$chars[rand(0,$size)];
-        return $password;
     }
 }
