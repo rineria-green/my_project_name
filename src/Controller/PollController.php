@@ -23,6 +23,7 @@ class PollController extends AbstractController
      */
     public function createPoll(Request $request, Jsoner $jsoner)
     {
+        $this->denyAccessUnlessGranted('ROLE_USER');
         $content = $request->getContent();
         $content = json_decode($content, true);
         $poll = new Poll();
@@ -39,6 +40,7 @@ class PollController extends AbstractController
      */
     public function showPoll($id, Jsoner $jsoner)
     {
+        $this->denyAccessUnlessGranted('ROLE_USER');
         $poll = $this->getDoctrine()->getManager()->getRepository(Poll::class)->find($id);
         return new JsonResponse($jsoner->getJson($poll), 200, [],true);
     }
@@ -50,6 +52,7 @@ class PollController extends AbstractController
      */
     public function deletePoll($id)
     {
+        $this->denyAccessUnlessGranted('ROLE_USER');
         $poll = $this->getDoctrine()->getManager()->getRepository(Poll::class)->find($id);
         $this->getDoctrine()->getManager()->remove($poll);
         $this->getDoctrine()->getManager()->flush();

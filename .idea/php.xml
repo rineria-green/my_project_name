@@ -81,6 +81,9 @@
       <path value="$PROJECT_DIR$/vendor/hoa/event" />
       <path value="$PROJECT_DIR$/vendor/hoa/compiler" />
       <path value="$PROJECT_DIR$/vendor/hoa/file" />
+      <path value="$PROJECT_DIR$/vendor/egulias/email-validator" />
+      <path value="$PROJECT_DIR$/vendor/symfony/swiftmailer-bundle" />
+      <path value="$PROJECT_DIR$/vendor/swiftmailer/swiftmailer" />
     </include_path>
   </component>
   <component name="PhpProjectSharedConfiguration" php_language_level="7.2" />

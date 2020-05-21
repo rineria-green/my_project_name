@@ -22,6 +22,7 @@ class QuestionController extends AbstractController
      */
     public function createQuestion (Request $request, Jsoner $jsoner)
     {
+        $this->denyAccessUnlessGranted('ROLE_USER');
         $content = $request->getContent();
         $content = json_decode($content, true);
         $question = new Question();
@@ -43,6 +44,7 @@ class QuestionController extends AbstractController
      */
     public function deleteQuestion($id)
     {
+        $this->denyAccessUnlessGranted('ROLE_USER');
         $question = $this->getDoctrine()->getManager()->getRepository(Question::class)->find($id);
         $this->getDoctrine()->getManager()->remove($question);
         $this->getDoctrine()->getManager()->flush();

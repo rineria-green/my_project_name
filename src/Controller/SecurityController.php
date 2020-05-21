@@ -31,28 +31,4 @@ class SecurityController extends AbstractController
 //        ];
         return new JsonResponse($jsoner->getJson($user), 200, [],true);
     }
-
-    /**
-     * @Route("/api/user", name="get_users", methods={"GET"})
-     * @param Request $request
-     * @return JsonResponse
-     */
-    public function getUsers(Request $request, Jsoner $jsoner)
-    {
-        $users= $this->getDoctrine()->getManager()->getRepository(User::class)->findAll();
-        return new JsonResponse($jsoner->getJson($users), 200, [],true);
-    }
-
-    /**
-     * @Route("/api/user/{id}", name="delete_users", methods={"DELETE"})
-     * @param $id
-     * @return Response
-     */
-    public function deleteUser($id)
-    {
-        $user = $this->getDoctrine()->getManager()->getRepository(User::class)->find($id);
-        $this->getDoctrine()->getManager()->remove($user);
-        $this->getDoctrine()->getManager()->flush();
-        return (new Response("",204));
-    }
 }

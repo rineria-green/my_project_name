@@ -23,6 +23,7 @@ class AnswerController extends AbstractController
      */
     public function createAnswer(Request $request, Jsoner $jsoner)
     {
+        $this->denyAccessUnlessGranted('ROLE_ADMIN');
         $content = $request->getContent();
         $content = json_decode($content, true);
         $answer = new Answer();
@@ -49,6 +50,7 @@ class AnswerController extends AbstractController
      */
     public function deleteAnswer($id)
     {
+        $this->denyAccessUnlessGranted('ROLE_USER');
         $answer = $this->getDoctrine()->getManager()->getRepository(Answer::class)->find($id);
         $this->getDoctrine()->getManager()->remove($answer);
         $this->getDoctrine()->getManager()->flush();
